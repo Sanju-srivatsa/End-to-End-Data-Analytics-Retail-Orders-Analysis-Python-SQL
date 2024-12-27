@@ -58,37 +58,41 @@ The dataset includes retail orders with the following key attributes:
 - `category` and `sub_category`: Product categories and subcategories.
 - `sale_price`, `quantity`, `discount`, and `profit`: Metrics for financial analysis.
 
+
 ---
 
 ## **Workflow Steps**
 
 ### **1. Data Extraction**
-- The Kaggle API was used to programmatically download the dataset from [Kaggle](https://www.kaggle.com).
-- The dataset was extracted from its `.zip` format and loaded into a Pandas DataFrame.
+- Automated dataset download using the Kaggle API.
+- Decompression of the dataset into a Pandas DataFrame for processing.
 
 ### **2. Data Cleaning**
-- **Missing Values**: Handled missing values in the `ship_mode` column by replacing them with "Unknown."
-- **Duplicate Records**: Identified and removed duplicate `order_id` entries to ensure data integrity.
-- **Standardization**: Normalized column names to lowercase with underscores for consistency.
+- **Missing Data Handling:** Filled null `ship_mode` values with "Unknown."
+- **Duplicate Removal:** Dropped duplicate `order_id` entries.
+- **Column Standardization:** Normalized column names for consistency.
 
 ### **3. Data Transformation**
-- Derived new metrics:
-  - **Discount**: Calculated as `list_price * discount_percent`.
-  - **Sale Price**: Determined by subtracting the discount from the list price.
-  - **Profit**: Calculated as `sale_price - cost_price`.
-- Reformatted the `order_date` column for better querying.
+- Computed new metrics for analysis:
+  - **Discount**: Derived from list price and discount percentage.
+  - **Sale Price**: Net price after discount.
+  - **Profit**: Sale price minus cost price.
+- Reformatted `order_date` for ease of querying.
 
 ### **4. Data Loading**
-- **SQLite**: Created a database using SQLite for local data analysis.
-- **MySQL**: Loaded the data into a MySQL database for scalable querying.
+- **SQLite Integration:** Enabled local storage and quick querying.
+- **MySQL Integration:** Facilitated scalable data analysis with optimized schemas.
 
 ### **5. Data Analysis**
-SQL queries were designed to address the following:
-1. **Top-Performing Products by Revenue**: Identified products contributing the most revenue.
-2. **Regional Sales Trends**: Analyzed total sales across different regions.
-3. **Month-over-Month Sales Growth**: Monitored sales performance trends over time.
-4. **High-Growth Subcategories by Profit**: Highlighted profitable subcategories.
-5. **Discount Impact on Revenue**: Assessed how discounts affect revenue.
+Used SQL to address key business objectives, such as:
+- Identifying high-revenue products and profitable regions.
+- Evaluating the impact of discounts on sales.
+- Tracking sales trends and profitability by month and category.
+
+### **6. Visualization**
+- Generated visualizations to complement SQL insights:
+  - Bar charts for top-performing products and regions.
+  - Line charts for trends in sales growth and discounts.
 
 ---
 
@@ -179,41 +183,6 @@ The included SQL file is pivotal to this project as it:
 - **Location Information:** `country`, `city`, `state`, `region`
 - **Product Information:** `category`, `sub_category`, `product_id`
 - **Financial Metrics:** `quantity`, `discount`, `sale_price`, `profit`
-
----
-
-## **Workflow Steps**
-
-### **1. Data Extraction**
-- Automated dataset download using the Kaggle API.
-- Decompression of the dataset into a Pandas DataFrame for processing.
-
-### **2. Data Cleaning**
-- **Missing Data Handling:** Filled null `ship_mode` values with "Unknown."
-- **Duplicate Removal:** Dropped duplicate `order_id` entries.
-- **Column Standardization:** Normalized column names for consistency.
-
-### **3. Data Transformation**
-- Computed new metrics for analysis:
-  - **Discount**: Derived from list price and discount percentage.
-  - **Sale Price**: Net price after discount.
-  - **Profit**: Sale price minus cost price.
-- Reformatted `order_date` for ease of querying.
-
-### **4. Data Loading**
-- **SQLite Integration:** Enabled local storage and quick querying.
-- **MySQL Integration:** Facilitated scalable data analysis with optimized schemas.
-
-### **5. Data Analysis**
-Used SQL to address key business objectives, such as:
-- Identifying high-revenue products and profitable regions.
-- Evaluating the impact of discounts on sales.
-- Tracking sales trends and profitability by month and category.
-
-### **6. Visualization**
-- Generated visualizations to complement SQL insights:
-  - Bar charts for top-performing products and regions.
-  - Line charts for trends in sales growth and discounts.
 
 ---
 
