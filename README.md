@@ -1,5 +1,8 @@
 # Retail Orders Analysis: End-to-End Data Analytics Project
 
+### Kaggle Notebook:
+https://www.kaggle.com/code/sanjusrivatsa9/retail-orders-analysis
+
 ## **Introduction**
 This project is an end-to-end data analytics workflow designed to mimic a real-world business scenario. It demonstrates the Extract, Transform, Load (ETL) process and data analysis to uncover actionable insights from a retail orders dataset.
 
@@ -92,23 +95,51 @@ SQL queries were designed to address the following:
 ## **Visualizations**
 1. **Top 10 Products by Revenue**:
    - Bar chart visualizing the products with the highest revenue.
+![image](https://github.com/user-attachments/assets/3608d969-0e1f-42eb-bf50-e27e6e1ee229)
 
 2. **Regional Sales Trends**:
    - Bar chart showing total sales for each region.
+![image](https://github.com/user-attachments/assets/e10cdbe4-322d-4892-89e5-3d3b61f7cf04)
 
 3. **Month-over-Month Sales Growth**:
    - Line chart tracking sales trends month by month.
+![image](https://github.com/user-attachments/assets/00ba4443-ef32-4acf-af1a-23b5c458f4bd)
 
 4. **High-Growth Subcategories by Profit**:
    - Horizontal bar chart showcasing subcategories with the highest profits.
+![image](https://github.com/user-attachments/assets/42f21b02-5ee6-4cd0-b17a-f9b6ee097fc5)
 
 5. **Impact of Discount on Revenue**:
    - Line chart illustrating the relationship between discount percentages and total revenue.
+![image](https://github.com/user-attachments/assets/84be412e-37bc-44b5-aabb-b6142991b4d4)
 
 6. **Profitability by Region**:
    - Bar chart highlighting profits generated in each region.
+![image](https://github.com/user-attachments/assets/539fa3c3-639e-4ecb-8c4f-263bbffac637)
+
 
 ---
+
+## **SQL File Explanation**
+### **Purpose**
+The included SQL file is pivotal to this project as it:
+1. **Defines the Database Schema**:
+   - The `retail_orders` table is created with constraints for data integrity, such as:
+     - `order_id` as the primary key.
+     - Default values for specific columns (e.g., `country`, `quantity`).
+   - Indexes are added for performance optimization.
+2. **Answers Business Questions**:
+   - Contains 11 business queries addressing key performance indicators, such as:
+     - Top-performing products by revenue.
+     - Regional profitability.
+     - Month-over-month sales growth.
+3. **Provides Scalability**:
+   - The SQL file can be adapted to analyze other datasets with similar structures.
+
+### **Schema Design**
+- **Primary Key:** Ensures unique `order_id`.
+- **Indexes:** Improve query performance for `order_date`, `region`, and `category`.
+- **Constraints:** Enforce data quality with `NOT NULL` and default values.
 
 ## **SQL Queries Used**
 ### Example Queries:
@@ -120,6 +151,8 @@ SQL queries were designed to address the following:
   ORDER BY total_revenue DESC
   LIMIT 10;
   ```
+<img width="1356" alt="image" src="https://github.com/user-attachments/assets/6bb47cf9-fd11-4288-a0b0-0f8f77fbeb76" />
+
 - **Regional Sales Trends**:
   ```sql
   SELECT region, SUM(sale_price * quantity) AS total_sales
@@ -127,6 +160,7 @@ SQL queries were designed to address the following:
   GROUP BY region
   ORDER BY total_sales DESC;
   ```
+<img width="851" alt="image" src="https://github.com/user-attachments/assets/a17150e1-3b99-4c27-9003-1f05eb4d8688" />
 
 - **Month-over-Month Sales Growth**:
   ```sql
@@ -135,36 +169,84 @@ SQL queries were designed to address the following:
   GROUP BY month
   ORDER BY month;
   ```
+<img width="1170" alt="image" src="https://github.com/user-attachments/assets/447849d8-b3a1-43a2-8884-f010bcf42051" />
+   ```
+
+---
+
+## **Dataset Attributes**
+- **Order Details:** `order_id`, `order_date`, `ship_mode`, `segment`
+- **Location Information:** `country`, `city`, `state`, `region`
+- **Product Information:** `category`, `sub_category`, `product_id`
+- **Financial Metrics:** `quantity`, `discount`, `sale_price`, `profit`
+
+---
+
+## **Workflow Steps**
+
+### **1. Data Extraction**
+- Automated dataset download using the Kaggle API.
+- Decompression of the dataset into a Pandas DataFrame for processing.
+
+### **2. Data Cleaning**
+- **Missing Data Handling:** Filled null `ship_mode` values with "Unknown."
+- **Duplicate Removal:** Dropped duplicate `order_id` entries.
+- **Column Standardization:** Normalized column names for consistency.
+
+### **3. Data Transformation**
+- Computed new metrics for analysis:
+  - **Discount**: Derived from list price and discount percentage.
+  - **Sale Price**: Net price after discount.
+  - **Profit**: Sale price minus cost price.
+- Reformatted `order_date` for ease of querying.
+
+### **4. Data Loading**
+- **SQLite Integration:** Enabled local storage and quick querying.
+- **MySQL Integration:** Facilitated scalable data analysis with optimized schemas.
+
+### **5. Data Analysis**
+Used SQL to address key business objectives, such as:
+- Identifying high-revenue products and profitable regions.
+- Evaluating the impact of discounts on sales.
+- Tracking sales trends and profitability by month and category.
+
+### **6. Visualization**
+- Generated visualizations to complement SQL insights:
+  - Bar charts for top-performing products and regions.
+  - Line charts for trends in sales growth and discounts.
 
 ---
 
 ## **Insights and Recommendations**
+
 ### **Key Insights**
-1. **Top-Performing Products**:
-   - Products generating the highest revenue should be prioritized for marketing campaigns.
-2. **Regional Trends**:
-   - Regions with high sales should receive additional resources to maximize revenue.
-3. **Discount Strategy**:
-   - Analyze the impact of discounts to optimize pricing strategies.
-4. **Profitability**:
-   - Subcategories with high profits should be prioritized for upselling opportunities.
+1. **Product Performance:**
+   - Specific products consistently generate the highest revenue.
+2. **Regional Trends:**
+   - Regions with strong profitability warrant increased investment.
+3. **Discount Optimization:**
+   - Discounts influence revenue positively but require strategic planning.
+4. **Category Focus:**
+   - Subcategories with high margins offer opportunities for upselling.
 
 ### **Recommendations**
-- Allocate more resources to high-performing regions and subcategories.
-- Optimize discount strategies to balance revenue growth and profitability.
-- Focus marketing efforts on top-selling products to maximize ROI.
+- Prioritize marketing efforts on top-performing products and regions.
+- Implement dynamic discounting strategies to maximize profitability.
+- Focus inventory management on high-demand and high-margin subcategories.
 
 ---
 
 ## **Future Enhancements**
-- **Scalability**: Automate the ETL process using tools like Apache Airflow or AWS Glue.
-- **Machine Learning**: Implement predictive models for sales forecasting.
-- **Interactive Dashboards**: Develop dashboards using Tableau, Power BI, or Streamlit.
-- **Cloud Deployment**: Migrate the database to a cloud platform like AWS or Azure for scalability.
+1. **Automation**:
+   - Use tools like Apache Airflow to automate ETL workflows.
+2. **Predictive Analysis**:
+   - Incorporate machine learning models for sales forecasting.
+3. **Interactive Dashboards**:
+   - Build dashboards with Tableau or Streamlit for real-time insights.
+4. **Cloud Integration**:
+   - Migrate workflows to cloud platforms for scalability and accessibility.
 
 ---
 
 ## **Conclusion**
-This project demonstrates a comprehensive data analytics workflow, from data cleaning and transformation to database integration and visualization. It showcases the practical application of Python and SQL in solving real-world business problems and generating actionable insights.
-
-For further exploration, this workflow can be extended to include advanced analytics, predictive modeling, and interactive dashboards, providing even greater value for decision-making in retail operations.
+This project serves as a robust example of leveraging Python, SQL, and data visualization to solve real-world business problems. It highlights the practical application of data engineering and analytics, making it a valuable resource for aspiring data professionals. By extending the analysis to predictive modeling and cloud integration, this workflow can unlock even greater business value.
